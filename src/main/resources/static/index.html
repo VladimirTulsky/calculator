@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+<body>
+<form id="form" action="/calculate" method="POST">
+  <input name="expression" />
+  <button>Send</button>
+  <p id="output">
+
+  </p>
+</form>
+<script>
+  const form = document.forms.form;
+  const output = document.getElementById("output");
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const res = await fetch(e.target.action, {
+      body: JSON.stringify({ expression: e.target.expression.value }),
+      method: e.target.method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await res.json();
+
+    output.innerText=data.expression;
+  });
+</script>
+</body>
+</html>
